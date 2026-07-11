@@ -35,18 +35,18 @@ def listener(event: Event):
 
     print(
         f"""
-[EVENT]
-
-Type:
-{event.type.name}
-
-Source:
-{event.source}
-
-Data:
-{event.data}
-
-"""
+        [EVENT]
+        
+        Type:
+        {event.type.name}
+        
+        Source:
+        {event.source}
+        
+        Data:
+        {event.data}
+        
+        """
     )
 
 
