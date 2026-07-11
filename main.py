@@ -1,46 +1,101 @@
 """
 ==========================================================
-WinFlow
+WinFlow Entry Point
 ==========================================================
 
-Точка входа в приложение.
+Точка входа приложения.
 
-На текущем этапе main.py используется
-для тестирования компонентов ядра.
+На текущем этапе:
 
-В дальнейшем здесь будет происходить:
-
-- загрузка конфигурации;
-- создание EventBus;
-- запуск Watchers;
-- запуск RuleEngine;
-- запуск GUI;
-- корректное завершение приложения.
+- создаем EventBus;
+- подписываем обработчик событий;
+- запускаем ProcessWatcher.
 """
+
+
+import time
 
 from app.core.event import Event
 from app.core.event_bus import EventBus
 from app.core.event_type import EventType
+from app.watchers.process_watcher import ProcessWatcher
+
 
 
 def listener(event: Event):
-    print(f"Получено событие: {event.type.name}")
-    print(event.data)
+    """
+    Тестовый обработчик событий.
 
+    Позже здесь будут:
 
-bus = EventBus()
+    - RuleEngine;
+    - Logger;
+    - GUI;
+    """
 
-bus.subscribe(
-    EventType.PROCESS_STARTED,
-    listener
-)
+    print(
+        f"""
+[EVENT]
 
-bus.publish(
-    Event(
-        type=EventType.PROCESS_STARTED,
-        source="Test",
-        data={
-            "process": "steam.exe"
-        }
+Type:
+{event.type.name}
+
+Source:
+{event.source}
+
+Data:
+{event.data}
+
+"""
     )
-)
+
+
+
+def main():
+
+    bus = EventBus()
+
+
+    bus.subscribe(
+        EventType.PROCESS_STARTED,
+        listener
+    )
+
+    bus.subscribe(
+        EventType.PROCESS_STOPPED,
+        listener
+    )
+
+
+    watcher = ProcessWatcher(
+        event_bus=bus,
+        interval=1
+    )
+
+
+    watcher.start()
+
+
+    print(
+        "WinFlow started..."
+    )
+
+
+    try:
+
+        while True:
+            time.sleep(1)
+
+
+    except KeyboardInterrupt:
+
+        print(
+            "Stopping WinFlow..."
+        )
+
+        watcher.stop()
+
+
+
+if __name__ == "__main__":
+    main()
