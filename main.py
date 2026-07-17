@@ -19,7 +19,7 @@ from app.core.event import Event
 from app.core.event_bus import EventBus
 from app.core.event_type import EventType
 from app.watchers.process_watcher import ProcessWatcher
-
+from config.config_manager import ConfigManager
 
 
 def listener(event: Event):
@@ -55,7 +55,6 @@ def main():
 
     bus = EventBus()
 
-
     bus.subscribe(
         EventType.PROCESS_STARTED,
         listener
@@ -67,9 +66,12 @@ def main():
     )
 
 
+    config = ConfigManager("configs/settings.json")
+    config.load()
+
     watcher = ProcessWatcher(
         event_bus=bus,
-        interval=1
+        configuration=config
     )
 
 

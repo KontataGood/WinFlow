@@ -1,9 +1,7 @@
 {
     "process_watcher": {
-        "interval": 1,
-
+        "interval": 5,
         "ignored_processes": [],
-
         "watch_only": []
     }
 }

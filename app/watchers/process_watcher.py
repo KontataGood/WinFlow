@@ -69,8 +69,8 @@ class ProcessWatcher(Watcher):
 
     def __init__(
         self,
-        event_bus: EventBus,
-        interval: int = 1
+        event_bus,
+        configuration
     ):
         """
         Создает ProcessWatcher.
@@ -86,7 +86,10 @@ class ProcessWatcher(Watcher):
         """
 
         self.event_bus = event_bus
-        self.interval = interval
+        self._interval = configuration.get(
+            "process_watcher.interval",
+            1
+        )
 
         self.running = False
 
@@ -124,7 +127,7 @@ class ProcessWatcher(Watcher):
         """
         while self.running:
             self._check_processes()
-            time.sleep(self.interval)
+            time.sleep(self._interval)
 
     def stop(self):
         """
