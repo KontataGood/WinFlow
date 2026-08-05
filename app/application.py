@@ -17,9 +17,8 @@ Application НЕ содержит бизнес-логику.
 """
 
 from config.config_manager import ConfigManager
-from app.core.event import Event
+from app.logger.logger import Logger
 from app.core.event_bus import EventBus
-from app.core.event_type import EventType
 from app.watchers.process_watcher import ProcessWatcher
 
 
@@ -50,10 +49,10 @@ class Application:
             configuration=self._configuration
         )
 
-        # ---------- Registration ----------
-
-        self._register_handlers()
-
+        # ---------- Logger ----------
+        self._logger = Logger(
+            self._event_bus
+        )
     def run(self):
         """
         Запускает приложение.
@@ -74,45 +73,3 @@ class Application:
         print("Stopping WinFlow...")
 
         self._process_watcher.stop()
-
-    def _register_handlers(self):
-        """
-        Регистрирует обработчики событий.
-
-        В дальнейшем сюда будут добавляться
-        новые события и новые подписчики.
-        """
-
-        self._event_bus.subscribe(
-            EventType.PROCESS_STARTED,
-            self._listener
-        )
-
-        self._event_bus.subscribe(
-            EventType.PROCESS_STOPPED,
-            self._listener
-        )
-
-    @staticmethod
-    def _listener(event: Event):
-        """
-        Временный обработчик событий.
-
-        Позже будет заменен системой логирования
-        или RuleEngine.
-        """
-
-        print(
-            f"""
-[EVENT]
-
-Type:
-{event.type.name}
-
-Source:
-{event.source}
-
-Data:
-{event.data}
-"""
-        )
