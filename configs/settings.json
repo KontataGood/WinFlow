@@ -3,5 +3,20 @@
         "interval": 5,
         "ignored_processes": [],
         "watch_only": []
-    }
+    },
+
+    "rules": [
+        {
+            "name": "Start Notepad with Todo",
+            "enabled": true,
+            "event": "PROCESS_STARTED",
+            "conditions": {
+                "process": "Todo.exe"
+            },
+            "action": {
+                "type": "START_PROGRAM",
+                "program": "notepad.exe"
+            }
+        }
+    ]
 }

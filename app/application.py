@@ -20,7 +20,8 @@ from config.config_manager import ConfigManager
 from app.logger.logger import Logger
 from app.core.event_bus import EventBus
 from app.watchers.process_watcher import ProcessWatcher
-
+from app.rules.rule_manager import RuleManager
+from app.rules.rule_engine import RuleEngine
 
 class Application:
     """
@@ -38,9 +39,22 @@ class Application:
         self._configuration = ConfigManager("configs/settings.json")
         self._configuration.load()
 
+        # ---------- Rule Manager ----------
+
+        self._rule_manager = RuleManager(
+            self._configuration
+        )
+
         # ---------- Core ----------
 
         self._event_bus = EventBus()
+
+        # ---------- Rule Engine ----------
+
+        self._rule_engine = RuleEngine(
+            event_bus=self._event_bus,
+            rule_manager=self._rule_manager
+        )
 
         # ---------- Watchers ----------
 
@@ -50,9 +64,11 @@ class Application:
         )
 
         # ---------- Logger ----------
+
         self._logger = Logger(
             self._event_bus
         )
+
     def run(self):
         """
         Запускает приложение.
