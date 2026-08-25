@@ -86,13 +86,7 @@ class Logger:
         Подписка на события приложения.
         """
 
-        self._event_bus.subscribe(
-            EventType.PROCESS_STARTED,
-            self._handle_event
-        )
-
-        self._event_bus.subscribe(
-            EventType.PROCESS_STOPPED,
+        self._event_bus.subscribe_all(
             self._handle_event
         )
 

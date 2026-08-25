@@ -84,6 +84,7 @@ class EventBus:
     """
 
     def __init__(self):
+        self._global_subscribers = []
         self._subscribers = defaultdict(list)
 
     def subscribe(
@@ -92,54 +93,83 @@ class EventBus:
         callback: Callable[[Event], None]
     ):
         """
-        Регистрирует обработчик события.
-        
-        Параметры
-        ---------
-        event_type
-            Тип события, на которое необходимо подписаться.
-        
-        callback
-            Функция, которая будет вызвана при публикации
-            события данного типа.
-        
-        Возвращает
-        ----------
-        None
-        
-        Примечания
-        ----------
-        Один обработчик может быть зарегистрирован
-        на несколько различных типов событий.
-        
-        Повторная регистрация допускается.
+        Подписывает callback на определенный тип события.
+
+        Callback будет вызван только тогда,
+        когда EventBus получит событие указанного типа.
+
+        Args:
+            event_type:
+                Тип события, на которое производится подписка.
+
+            callback:
+                Функция или метод, который будет вызван
+                при получении события.
         """
 
         self._subscribers[event_type].append(callback)
 
+
+    def subscribe_all(
+        self,
+        callback: Callable[[Event], None]
+    ):
+        """
+        Подписывает callback на все события.
+
+        В отличие от subscribe(), callback будет
+        получать события любого типа.
+
+        Это удобно для компонентов, которым необходимо
+        наблюдать за всей системой.
+
+        Например:
+
+            Logger
+            Monitoring
+            Debugger
+        """
+
+        self._global_subscribers.append(callback)
+
+    def unsubscribe(
+        self,
+        event_type: EventType,
+        callback: Callable[[Event], None]
+    ):
+        """
+        Удаляет callback из подписчиков события.
+
+        Если callback не был подписан,
+        ничего не происходит.
+
+        Args:
+            event_type:
+                Тип события.
+
+            callback:
+                Обработчик, который необходимо удалить.
+        """
+
+        if callback in self._subscribers[event_type]:
+            self._subscribers[event_type].remove(callback)
+
     def publish(self, event: Event):
         """
         Публикует событие в системе.
-    
-        После публикации EventBus находит всех
-        подписчиков данного типа события
-        и вызывает их обработчики.
-    
-        EventBus не знает,
-        что именно делают подписчики.
-    
-        Это обеспечивает слабую связанность
-        компонентов системы.
+
+        Сначала событие получают подписчики,
+        зарегистрированные для конкретного типа события.
+
+        Затем событие получают глобальные подписчики,
+        подписанные через subscribe_all().
+
+        EventBus не знает, что именно делают
+        получатели события.
         """
 
         for callback in self._subscribers[event.type]:
-            # Для каждого обработчика,
-            # подписанного на данный тип события,
-            # вызываем функцию, передавая объект Event.
-            #
-            # EventBus не знает,
-            # что именно делает обработчик.
-            # Это позволяет подключать новые модули
-            # без изменения самого EventBus.
+            callback(event)
 
+        for callback in self._global_subscribers:
             callback(event)
