@@ -11,7 +11,7 @@ Rule Validator
 Validator отвечает только за проверку структуры данных.
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 

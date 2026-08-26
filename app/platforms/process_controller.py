@@ -10,7 +10,7 @@ Process Controller
 Конкретная реализация зависит от операционной системы.
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 from abc import ABC, abstractmethod

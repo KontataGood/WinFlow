@@ -4,7 +4,7 @@ macOS Program Launcher
 ==========================================================
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 import subprocess

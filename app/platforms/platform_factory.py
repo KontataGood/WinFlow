@@ -5,10 +5,10 @@ Platform Factory
 
 Назначение
 ----------
-Создание platform-specific компонентов WinFlow.
+Создание platform-specific компонентов Autom Task.
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 import platform

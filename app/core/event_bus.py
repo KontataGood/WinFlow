@@ -48,7 +48,7 @@ EventBus
     Kontata
 
 Проект:
-    WinFlow
+    Autom Task
 """
 from collections import defaultdict
 from collections.abc import Callable

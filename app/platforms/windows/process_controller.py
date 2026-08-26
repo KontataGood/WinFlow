@@ -8,7 +8,7 @@ Windows Process Controller
 Windows-реализация ProcessController.
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 import subprocess

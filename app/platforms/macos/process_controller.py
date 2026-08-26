@@ -8,7 +8,7 @@ macOS Process Controller
 macOS-реализация ProcessController.
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 import subprocess

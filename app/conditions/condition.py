@@ -22,7 +22,7 @@ Condition
     }
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 from dataclasses import dataclass

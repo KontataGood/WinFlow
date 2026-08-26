@@ -5,7 +5,7 @@ Rule Manager
 
 Назначение
 ----------
-Управление правилами автоматизации WinFlow.
+Управление правилами автоматизации Autom Task.
 
 RuleManager отвечает за загрузку правил из конфигурации
 и создание объектов Rule.
@@ -15,7 +15,7 @@ RuleManager НЕ выполняет правила.
 За выполнение правил будет отвечать RuleEngine.
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 from app.rules.rule import Rule
@@ -30,7 +30,7 @@ from app.rules.rule_validator import (
 
 class RuleManager:
     """
-    Управляет набором правил WinFlow.
+    Управляет набором правил Autom Task.
     """
 
     def __init__(self, configuration):

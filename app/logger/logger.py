@@ -1,7 +1,7 @@
 """
 logger.py
 
-Система логирования WinFlow.
+Система логирования Autom Task.
 
 Logger получает события через EventBus
 и сохраняет информацию о работе приложения.
@@ -18,7 +18,7 @@ class Logger:
     """
     Логгер приложения.
 
-    Отвечает за запись событий WinFlow.
+    Отвечает за запись событий Autom Task.
     """
 
     def __init__(self, event_bus):
@@ -48,7 +48,7 @@ class Logger:
             exist_ok=True
         )
 
-        logger = logging.getLogger("WinFlow")
+        logger = logging.getLogger("Autom Task")
 
         logger.setLevel(logging.INFO)
 
@@ -58,7 +58,7 @@ class Logger:
         if not logger.handlers:
 
             file_handler = logging.FileHandler(
-                log_directory / "winflow.log",
+                log_directory / "automtask.log",
                 encoding="utf-8"
             )
 

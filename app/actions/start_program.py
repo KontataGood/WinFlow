@@ -4,7 +4,7 @@ Start Program Action
 ==========================================================
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 from app.platforms.platform_factory import (

@@ -8,7 +8,7 @@ Condition Operators
 Перечисление операторов, используемых при проверке условий.
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 from enum import Enum

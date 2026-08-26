@@ -1,7 +1,7 @@
 """
 application.py
 
-Главный класс приложения WinFlow.
+Главный класс приложения Autom Task.
 
 Отвечает за:
 
@@ -25,7 +25,7 @@ from app.rules.rule_engine import RuleEngine
 
 class Application:
     """
-    Главный класс WinFlow.
+    Главный класс Autom Task.
 
     Создает все основные компоненты приложения и
     управляет их жизненным циклом.
@@ -77,7 +77,7 @@ class Application:
         которые должны работать постоянно.
         """
 
-        print("WinFlow started...")
+        print("Autom Task started...")
 
         self._process_watcher.start()
 
@@ -86,6 +86,6 @@ class Application:
         Корректно завершает работу приложения.
         """
 
-        print("Stopping WinFlow...")
+        print("Stopping Autom Task...")
 
         self._process_watcher.stop()

@@ -13,7 +13,7 @@ Stop Program Action
 используется ProcessController.
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 from app.platforms.process_controller import ProcessController

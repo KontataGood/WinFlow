@@ -14,7 +14,7 @@ Open URL Action
 от конкретной операционной системы.
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 import webbrowser

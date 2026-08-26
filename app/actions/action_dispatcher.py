@@ -11,7 +11,7 @@ Action Dispatcher
 Dispatcher не содержит реализацию самих действий.
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 from app.actions.start_program import StartProgramAction
@@ -24,7 +24,7 @@ from app.platforms.platform_factory import (
 
 class ActionDispatcher:
     """
-    Диспетчер действий WinFlow.
+    Диспетчер действий Autom Task.
     """
 
     def __init__(self):

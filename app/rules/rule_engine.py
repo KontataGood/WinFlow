@@ -30,7 +30,7 @@ RuleEngine не выполняет действия самостоятельно
 будет передан в отдельную систему выполнения действий.
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 from app.core.event import Event
@@ -41,7 +41,7 @@ from app.conditions.condition_checker import ConditionChecker
 
 class RuleEngine:
     """
-    Движок обработки правил WinFlow.
+    Движок обработки правил Autom Task.
 
     Получает события из EventBus и проверяет,
     какие правила соответствуют этим событиям.

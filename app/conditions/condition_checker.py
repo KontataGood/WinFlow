@@ -8,7 +8,7 @@ Condition Checker
 Проверка условий правила относительно данных события.
 
 Проект:
-    WinFlow
+    Autom Task
 """
 
 from app.conditions.condition import Condition
