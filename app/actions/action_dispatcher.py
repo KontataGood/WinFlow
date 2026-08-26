@@ -15,7 +15,8 @@ Dispatcher не содержит реализацию самих действи�
 """
 
 from app.actions.start_program import StartProgramAction
-
+from app.actions.stop_program import StopProgramAction
+from app.platform.process_controller import ProcessController
 
 class ActionDispatcher:
     """
@@ -27,8 +28,13 @@ class ActionDispatcher:
         Инициализирует обработчики действий.
         """
 
+        process_controller = ProcessController()
+
         self._actions = {
             "START_PROGRAM": StartProgramAction(),
+            "STOP_PROGRAM": StopProgramAction(
+                process_controller
+            ),
         }
 
     def execute(self, action: dict):

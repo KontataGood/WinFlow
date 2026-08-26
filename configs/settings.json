@@ -7,15 +7,15 @@
 
     "rules": [
         {
-            "name": "Start Notepad with Todo",
+            "name": "Stop Todo",
             "enabled": true,
             "event": "PROCESS_STARTED",
             "conditions": {
-                "process": "Todo.exe"
+                "process": "CalculatorApp.exe"
             },
             "action": {
-                "type": "START_PROGRAM",
-                "program": "notepad.exe"
+                "type": "STOP_PROGRAM",
+                "program": "Todo.exe"
             }
         }
     ]
