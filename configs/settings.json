@@ -10,9 +10,15 @@
             "name": "Todo Automation",
             "enabled": true,
             "event": "PROCESS_STARTED",
-            "conditions": {
-                "process": "Todo.exe"
-            },
+
+            "conditions": [
+                {
+                    "field": "process",
+                    "operator": "equals",
+                    "value": "Todo.exe"
+                }
+            ],
+
             "actions": [
                 {
                     "type": "START_PROGRAM",

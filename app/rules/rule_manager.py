@@ -20,6 +20,12 @@ RuleManager НЕ выполняет правила.
 
 from app.rules.rule import Rule
 from app.core.event_type import EventType
+from app.conditions.condition import Condition
+from app.conditions.condition_operator import ConditionOperator
+from app.rules.rule_validator import (
+    RuleValidator,
+    RuleValidationError
+)
 
 
 class RuleManager:
@@ -38,16 +44,19 @@ class RuleManager:
 
         self._configuration = configuration
 
+        self._validator = RuleValidator()
+
         self._rules = []
 
         self._load_rules()
+
 
     def _load_rules(self):
         """
         Загружает правила из конфигурации.
 
-        Если секция rules отсутствует,
-        используется пустой список.
+        Некорректные правила пропускаются,
+        остальные продолжают загружаться.
         """
 
         rules = self._configuration.get(
@@ -57,28 +66,57 @@ class RuleManager:
 
         for rule_data in rules:
 
-            event_type = EventType[
-                rule_data["event"]
-            ]
+            try:
+                # Проверяем структуру правила
+                self._validator.validate(rule_data)
 
-            rule = Rule(
-                name=rule_data["name"],
-                event_type=event_type,
-                conditions=rule_data.get(
+                # Создаём условия
+                conditions = []
+
+                for condition_data in rule_data.get(
                     "conditions",
-                    {}
-                ),
-                actions=rule_data.get(
-                    "actions",
                     []
-                ),
-                enabled=rule_data.get(
-                    "enabled",
-                    True
-                )
-            )
+                ):
+                    operator = ConditionOperator(
+                        condition_data["operator"]
+                    )
 
-            self._rules.append(rule)
+                    conditions.append(
+                        Condition(
+                            field=condition_data["field"],
+                            operator=operator,
+                            value=condition_data["value"]
+                        )
+                    )
+
+                # Тип события
+                event_type = EventType[
+                    rule_data["event"]
+                ]
+
+                # Создаём правило
+                rule = Rule(
+                    name=rule_data["name"],
+                    event_type=event_type,
+                    conditions=conditions,
+                    actions=rule_data.get(
+                        "actions",
+                        []
+                    ),
+                    enabled=rule_data.get(
+                        "enabled",
+                        True
+                    )
+                )
+
+                self._rules.append(rule)
+
+            except (RuleValidationError, ValueError, KeyError) as error:
+                print(
+                    f"Invalid rule "
+                    f"'{rule_data.get('name', '<unknown>')}': "
+                    f"{error}"
+                )
 
     def get_rules(self):
         """

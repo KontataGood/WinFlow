@@ -5,20 +5,14 @@ Condition Checker
 
 Назначение
 ----------
-Проверка условий правила относительно полученного события.
-
-ConditionChecker отделяет логику проверки условий
-от RuleEngine.
-
-На текущем этапе поддерживается простое сравнение:
-
-    actual_value == expected_value
-
-Все условия одного правила должны быть выполнены.
+Проверка условий правила относительно данных события.
 
 Проект:
     WinFlow
 """
+
+from app.conditions.condition import Condition
+from app.conditions.condition_operator import ConditionOperator
 
 
 class ConditionChecker:
@@ -28,30 +22,65 @@ class ConditionChecker:
 
     def check(
         self,
-        conditions: dict,
+        conditions: list[Condition],
         event_data: dict
     ) -> bool:
         """
         Проверяет все условия.
 
+        Все условия должны быть выполнены.
+
         Args:
             conditions:
-                Условия правила.
+                Список условий.
 
             event_data:
-                Данные полученного события.
+                Данные события.
 
         Returns:
             True, если все условия выполнены.
-            False, если хотя бы одно условие
-            не выполнено.
         """
 
-        for key, expected_value in conditions.items():
+        for condition in conditions:
 
-            actual_value = event_data.get(key)
+            actual_value = event_data.get(
+                condition.field
+            )
 
-            if actual_value != expected_value:
+            if not self._check_condition(
+                condition,
+                actual_value
+            ):
                 return False
 
         return True
+
+    def _check_condition(
+        self,
+        condition: Condition,
+        actual_value: object
+    ) -> bool:
+
+        if condition.operator == ConditionOperator.EQUALS:
+            return actual_value == condition.value
+
+        if condition.operator == ConditionOperator.NOT_EQUALS:
+            return actual_value != condition.value
+
+        if condition.operator == ConditionOperator.CONTAINS:
+
+            if not isinstance(actual_value, str):
+                return False
+
+            return condition.value in actual_value
+
+        if condition.operator == ConditionOperator.STARTS_WITH:
+
+            if not isinstance(actual_value, str):
+                return False
+
+            return actual_value.startswith(
+                condition.value
+            )
+
+        return False
