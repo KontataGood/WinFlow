@@ -22,7 +22,7 @@
             "actions": [
                 {
                     "type": "START_PROGRAM",
-                    "program": "notepad.exe"
+                    "program": "notepad"
                 },
                 {
                     "type": "OPEN_URL",

@@ -3,50 +3,25 @@
 Start Program Action
 ==========================================================
 
-Назначение
-----------
-Реализация действия START_PROGRAM.
-
-Данное действие запускает указанную программу
-или команду в операционной системе.
-
-ActionDispatcher отвечает за выбор действия,
-а этот класс отвечает непосредственно за его выполнение.
-
 Проект:
     WinFlow
 """
 
-import subprocess
+from app.platforms.platform_factory import (
+    create_program_launcher
+)
 
 
 class StartProgramAction:
     """
-    Запускает программу.
+    Запускает приложение через platform launcher.
     """
 
-    def execute(self, action: dict):
-        """
-        Выполняет действие запуска программы.
+    def __init__(self):
+        self._launcher = create_program_launcher()
 
-        Args:
-            action:
-                Конфигурация действия.
-
-                Пример:
-
-                    {
-                        "type": "START_PROGRAM",
-                        "program": "notepad.exe"
-                    }
-        """
+    def execute(self, action: dict) -> bool:
 
         program = action.get("program")
 
-        if not program:
-            return
-
-        subprocess.Popen(
-            program,
-            shell=True
-        )
+        return self._launcher.launch(program)
