@@ -36,6 +36,7 @@ RuleEngine не выполняет действия самостоятельно
 from app.core.event import Event
 from app.rules.rule_manager import RuleManager
 from app.actions.action_dispatcher import ActionDispatcher
+from app.conditions.condition_checker import ConditionChecker
 
 
 class RuleEngine:
@@ -68,6 +69,8 @@ class RuleEngine:
 
         self._register_handlers()
 
+        self._condition_checker = ConditionChecker()
+
     def _register_handlers(self):
         """
         Регистрирует обработчик событий.
@@ -98,9 +101,9 @@ class RuleEngine:
             if rule.event_type != event.type:
                 continue
 
-            if not self._check_conditions(
-                rule,
-                event
+            if not self._condition_checker.check(
+                rule.conditions,
+                event.data
             ):
                 continue
 
@@ -112,36 +115,3 @@ class RuleEngine:
                 self._action_dispatcher.execute(
                     action
                 )
-
-    @staticmethod
-    def _check_conditions(
-        rule,
-        event: Event
-    ) -> bool:
-        """
-        Проверяет условия правила
-        относительно полученного события.
-
-        Пока используется простая проверка
-        совпадения значений.
-
-        Например:
-
-            Rule:
-                {"process": "steam.exe"}
-
-            Event:
-                {"process": "steam.exe"}
-
-            Результат:
-                True
-        """
-
-        for key, expected_value in rule.conditions.items():
-
-            actual_value = event.data.get(key)
-
-            if actual_value != expected_value:
-                return False
-
-        return True
