@@ -5,68 +5,49 @@ Action Dispatcher
 
 Назначение
 ----------
-ActionDispatcher отвечает за выполнение действий,
-описанных в правилах WinFlow.
+Определяет, какой обработчик необходимо использовать
+для выполнения конкретного действия.
 
-RuleEngine определяет, какое правило подходит
-под событие, а ActionDispatcher выполняет
-указанное в правиле действие.
-
-Пример:
-
-    RuleEngine
-        │
-        ▼
-    ActionDispatcher
-        │
-        ▼
-    START_PROGRAM
-        │
-        ▼
-    spotify.exe
+Dispatcher не содержит реализацию самих действий.
 
 Проект:
     WinFlow
 """
 
-import subprocess
+from app.actions.start_program import StartProgramAction
 
 
 class ActionDispatcher:
     """
-    Выполняет действия WinFlow.
+    Диспетчер действий WinFlow.
     """
+
+    def __init__(self):
+        """
+        Инициализирует обработчики действий.
+        """
+
+        self._actions = {
+            "START_PROGRAM": StartProgramAction(),
+        }
 
     def execute(self, action: dict):
         """
-        Выполняет действие.
+        Передает действие соответствующему обработчику.
 
         Args:
             action:
-                Словарь с описанием действия.
+                Конфигурация действия.
         """
 
         action_type = action.get("type")
 
-        if action_type == "START_PROGRAM":
-            self._start_program(action)
+        handler = self._actions.get(action_type)
 
-    @staticmethod
-    def _start_program(action: dict):
-        """
-        Запускает программу.
-
-        Args:
-            action:
-                Описание действия START_PROGRAM.
-        """
-
-        program = action.get("program")
-
-        if not program:
+        if handler is None:
+            print(
+                f"Unknown action type: {action_type}"
+            )
             return
 
-        subprocess.Popen(
-            program,
-            shell=True
-        )
+        handler.execute(action)
