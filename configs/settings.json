@@ -7,16 +7,22 @@
 
     "rules": [
         {
-            "name": "Open YouTube",
+            "name": "Todo Automation",
             "enabled": true,
             "event": "PROCESS_STARTED",
             "conditions": {
                 "process": "Todo.exe"
             },
-            "action": {
-                "type": "OPEN_URL",
-                "url": "https://youtube.com"
-            }
+            "actions": [
+                {
+                    "type": "START_PROGRAM",
+                    "program": "notepad.exe"
+                },
+                {
+                    "type": "OPEN_URL",
+                    "url": "https://youtube.com"
+                }
+            ]
         }
     ]
 }

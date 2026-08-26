@@ -108,13 +108,14 @@ class RuleEngine:
                 f"Rule matched: {rule.name}"
             )
 
-            self._action_dispatcher.execute(
-                rule.action
-            )
+            for action in rule.actions:
+                self._action_dispatcher.execute(
+                    action
+                )
 
     @staticmethod
     def _check_conditions(
-            rule,
+        rule,
         event: Event
     ) -> bool:
         """

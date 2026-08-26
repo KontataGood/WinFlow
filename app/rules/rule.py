@@ -39,7 +39,7 @@ class Rule:
         name: str,
         event_type,
         conditions: dict,
-        action: dict,
+        actions: list[dict],
         enabled: bool = True
     ):
         """
@@ -66,5 +66,5 @@ class Rule:
         self.name = name
         self.event_type = event_type
         self.conditions = conditions
-        self.action = action
+        self.actions = actions
         self.enabled = enabled

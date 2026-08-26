@@ -68,9 +68,9 @@ class RuleManager:
                     "conditions",
                     {}
                 ),
-                action=rule_data.get(
-                    "action",
-                    {}
+                actions=rule_data.get(
+                    "actions",
+                    []
                 ),
                 enabled=rule_data.get(
                     "enabled",
