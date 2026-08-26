@@ -7,15 +7,15 @@
 
     "rules": [
         {
-            "name": "Stop Todo",
+            "name": "Open YouTube",
             "enabled": true,
             "event": "PROCESS_STARTED",
             "conditions": {
-                "process": "CalculatorApp.exe"
+                "process": "Todo.exe"
             },
             "action": {
-                "type": "STOP_PROGRAM",
-                "program": "Todo.exe"
+                "type": "OPEN_URL",
+                "url": "https://youtube.com"
             }
         }
     ]

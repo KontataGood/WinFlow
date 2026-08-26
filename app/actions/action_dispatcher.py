@@ -17,6 +17,7 @@ Dispatcher не содержит реализацию самих действи�
 from app.actions.start_program import StartProgramAction
 from app.actions.stop_program import StopProgramAction
 from app.platform.process_controller import ProcessController
+from app.actions.open_url import OpenUrlAction
 
 class ActionDispatcher:
     """
@@ -35,6 +36,7 @@ class ActionDispatcher:
             "STOP_PROGRAM": StopProgramAction(
                 process_controller
             ),
+            "OPEN_URL": OpenUrlAction(),
         }
 
     def execute(self, action: dict):
