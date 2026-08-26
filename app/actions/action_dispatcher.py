@@ -16,8 +16,11 @@ Dispatcher не содержит реализацию самих действи�
 
 from app.actions.start_program import StartProgramAction
 from app.actions.stop_program import StopProgramAction
-from app.platform.process_controller import ProcessController
+from app.platforms.process_controller import ProcessController
 from app.actions.open_url import OpenUrlAction
+from app.platforms.platform_factory import (
+    create_process_controller
+)
 
 class ActionDispatcher:
     """
@@ -29,7 +32,7 @@ class ActionDispatcher:
         Инициализирует обработчики действий.
         """
 
-        process_controller = ProcessController()
+        process_controller = create_process_controller()
 
         self._actions = {
             "START_PROGRAM": StartProgramAction(),

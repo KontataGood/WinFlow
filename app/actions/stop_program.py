@@ -16,7 +16,7 @@ Stop Program Action
     WinFlow
 """
 
-from app.platform.process_controller import ProcessController
+from app.platforms.process_controller import ProcessController
 
 
 class StopProgramAction:
