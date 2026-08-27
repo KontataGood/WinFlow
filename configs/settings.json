@@ -7,27 +7,26 @@
 
     "rules": [
         {
-            "name": "Todo Automation",
+            "name": "Browser Automation",
             "enabled": true,
             "event": "PROCESS_STARTED",
 
-            "conditions": [
-                {
-                    "field": "process",
-                    "operator": "equals",
-                    "value": "Todo.exe"
-                }
-            ],
+        "conditions": [
+        {
+            "field": "process",
+            "operator": "equals",
+            "value": {
+                "windows": "chrome.exe",
+                "macos": "Safari"
+            }
+        }
+    ],
 
-            "actions": [
-                {
-                    "type": "START_PROGRAM",
-                    "program": "notepad"
-                },
-                {
-                    "type": "OPEN_URL",
-                    "url": "https://youtube.com"
-                }
+    "actions": [
+        {
+            "type": "OPEN_URL",
+            "url": "https://youtube.com"
+        }
             ]
         }
     ]
