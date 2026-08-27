@@ -19,7 +19,9 @@ RuleManager НЕ выполняет правила.
 """
 
 from app.rules.rule import Rule
-from app.platforms.platform_resolver import PlatformResolver
+from app.platforms.platform_factory import (
+    create_platform_resolver
+)
 from app.core.event_type import EventType
 from app.conditions.condition import Condition
 from app.conditions.condition_operator import ConditionOperator
@@ -47,7 +49,7 @@ class RuleManager:
 
         self._validator = RuleValidator()
 
-        self._platform_resolver = PlatformResolver()
+        self._platform_resolver = create_platform_resolver()
 
         self._rules = []
 

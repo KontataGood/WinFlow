@@ -8,10 +8,8 @@ Start Program Action
 """
 
 from app.platforms.platform_factory import (
-    create_program_launcher
-)
-from app.platforms.platform_resolver import (
-    PlatformResolver
+    create_program_launcher,
+    create_platform_resolver
 )
 
 
@@ -22,7 +20,7 @@ class StartProgramAction:
 
     def __init__(self):
         self._launcher = create_program_launcher()
-        self._resolver = PlatformResolver()
+        self._resolver = create_platform_resolver()
 
     def execute(self, action: dict) -> bool:
 

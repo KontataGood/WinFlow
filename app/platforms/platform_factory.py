@@ -64,3 +64,12 @@ def create_program_launcher() -> ProgramLauncher:
     raise NotImplementedError(
         f"Platform '{system}' is not supported yet."
     )
+
+def create_platform_resolver():
+    """
+    Создаёт resolver для текущей ОС.
+    """
+
+    from app.platforms.platform_resolver import PlatformResolver
+
+    return PlatformResolver()
