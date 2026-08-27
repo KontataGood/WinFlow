@@ -11,22 +11,29 @@
             "enabled": true,
             "event": "PROCESS_STARTED",
 
-        "conditions": [
-        {
-            "field": "process",
-            "operator": "equals",
-            "value": {
-                "windows": "chrome.exe",
-                "macos": "Safari"
-            }
-        }
-    ],
+            "conditions": [
+                {
+                    "field": "process",
+                    "operator": "equals",
+                    "value": {
+                        "windows": "Todo.exe",
+                        "macos": "Safari"
+                    }
+                }
+            ],
 
-    "actions": [
-        {
-            "type": "OPEN_URL",
-            "url": "https://youtube.com"
-        }
+            "actions": [
+                {
+                    "type": "OPEN_URL",
+                    "url": "https://youtube.com"
+                },
+                {
+                    "type": "START_PROGRAM",
+                    "program": {
+                        "windows": "notepad.exe",
+                        "macos": "TextEdit"
+                    }
+                }
             ]
         }
     ]
