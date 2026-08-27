@@ -27,7 +27,7 @@ Rule не выполняет действие самостоятельно.
 Проект:
     Autom Task
 """
-
+from app.conditions.condition import Condition
 
 class Rule:
     """
@@ -38,7 +38,7 @@ class Rule:
         self,
         name: str,
         event_type,
-        conditions: dict,
+        conditions: list[Condition],
         actions: list[dict],
         enabled: bool = True
     ):
